@@ -1,5 +1,0 @@
-export {
-  development: {
-    database: 'pokemon'
-  }
-};
