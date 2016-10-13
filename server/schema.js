@@ -20,11 +20,31 @@ const PokemonType = new GraphQLObjectType({
   },
 });
 
+const TrainerType = new GraphQLObjectType({
+  name: 'TrainerType',
+  fields: () => {
+    return {
+      id: { type: GraphQLInt },
+      first_name: { type: GraphQLString },
+      last_name: { type: GraphQLString },
+      pokemon: {
+        type: new GraphQLList(PokemonType),
+        description: 'Pokemon belonging to this trainer',
+        resolve: ({ id }, args, { resolvers }) => resolvers.getPokemon(id),
+      },
+    };
+  },
+});
+
 // This is where all of our querying will stem from
 const RootQueryType = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: () => {
     return {
+      trainers: {
+        type: new GraphQLList(TrainerType),
+        resolve: (obj, args, { resolvers }) => resolvers.getTrainers(),
+      },
       pokemon: {
         type: new GraphQLList(PokemonType),
         args: {

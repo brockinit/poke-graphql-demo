@@ -10,4 +10,15 @@ export default (pgPool) => ({
       select * from pokemon
     `).then(res => res.rows);
   },
+  getTrainers: (id) => {
+    if (id) {
+      return pgPool.query(`
+        select * from trainers where id = ${id}
+      `)
+      .then(res => res.rows);
+    }
+    return pgPool.query(`
+      select * from trainers
+    `).then(res => res.rows);
+  },
 });
