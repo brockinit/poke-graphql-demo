@@ -10,10 +10,10 @@ export default (pgPool) => ({
       select * from pokemon
     `).then(res => res.rows);
   },
-  getTrainers: (id) => {
-    if (id) {
+  getTrainers: (first_name) => {
+    if (first_name) {
       return pgPool.query(`
-        select * from trainers where id = ${id}
+        select * from trainers where first_name = '${first_name}'
       `)
       .then(res => res.rows);
     }

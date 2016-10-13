@@ -43,14 +43,19 @@ const RootQueryType = new GraphQLObjectType({
     return {
       trainers: {
         type: new GraphQLList(TrainerType),
-        resolve: (obj, args, { resolvers }) => resolvers.getTrainers(),
+        args: {
+          first_name: { type: GraphQLString },
+        },
+        resolve: (obj, { first_name }, { resolvers: { getTrainers } }) =>
+        getTrainers(first_name),
       },
       pokemon: {
         type: new GraphQLList(PokemonType),
         args: {
           trainer_id: { type: GraphQLInt },
         },
-        resolve: (obj, { trainer_id }, { resolvers }) => resolvers.getPokemon(trainer_id),
+        resolve: (obj, { trainer_id }, { resolvers: { getPokemon } }) =>
+        getPokemon(trainer_id),
       },
     };
   },
