@@ -11,11 +11,11 @@ const PokemonType = new GraphQLObjectType({
   name: 'PokemonType',
   fields: () => {
     return {
-      trainer_id: GraphQLInt,
-      poke_name: GraphQLString,
-      poke_type: GraphQLString,
-      hp: GraphQLInt,
-      attack: GraphQLInt,
+      trainer_id: { type: GraphQLInt },
+      poke_name: { type: GraphQLString },
+      poke_type: { type: GraphQLString },
+      hp: { type: GraphQLInt },
+      attack: { type: GraphQLInt },
     };
   },
 });
@@ -28,9 +28,9 @@ const RootQueryType = new GraphQLObjectType({
       pokemon: {
         type: new GraphQLList(PokemonType),
         args: {
-          trainerId: { type: GraphQLInt },
+          trainer_id: { type: GraphQLInt },
         },
-        resolve: () => 'world',
+        resolve: (obj, { trainer_id }, { resolvers }) => resolvers.getPokemon(trainer_id),
       },
     };
   },
