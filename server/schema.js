@@ -4,6 +4,7 @@ import {
 	GraphQLString,
   GraphQLList,
   GraphQLInt,
+  GraphQLID,
 } from 'graphql';
 
 // Define custom type for querying pokemon
@@ -20,11 +21,12 @@ const PokemonType = new GraphQLObjectType({
   },
 });
 
+// Define custom type for querying trainers
 const TrainerType = new GraphQLObjectType({
   name: 'TrainerType',
   fields: () => {
     return {
-      id: { type: GraphQLInt },
+      id: { type: GraphQLID },
       first_name: { type: GraphQLString },
       last_name: { type: GraphQLString },
       pokemon: {
@@ -32,6 +34,19 @@ const TrainerType = new GraphQLObjectType({
         description: 'Pokemon belonging to this trainer',
         resolve: ({ id }, args, { resolvers }) => resolvers.getPokemon(id),
       },
+    };
+  },
+});
+
+// Define custom type for querying battles
+const BattleType = new GraphQLObjectType({
+  name: 'BattleType',
+  fields: () => {
+    return {
+      id: { type: GraphQLID },
+      battleground: { type: GraphQLString },
+      winning_trainer: { type: GraphQLInt },
+      losing_trainer: { type: GraphQLInt },
     };
   },
 });
@@ -56,6 +71,16 @@ const RootQueryType = new GraphQLObjectType({
         },
         resolve: (obj, { trainer_id }, { resolvers: { getPokemon } }) =>
         getPokemon(trainer_id),
+      },
+      battles: {
+        type: new GraphQLList(BattleType),
+        args: {
+          battleground: { type: GraphQLString },
+          winning_trainer: { type: GraphQLInt },
+          losing_trainer: { type: GraphQLInt },
+        },
+        resolve: (obj, args, { resolvers: { getBattles } }) =>
+        getBattles(args),
       },
     };
   },
