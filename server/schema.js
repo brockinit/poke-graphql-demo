@@ -47,6 +47,18 @@ const BattleType = new GraphQLObjectType({
       battleground: { type: GraphQLString },
       winning_trainer: { type: GraphQLInt },
       losing_trainer: { type: GraphQLInt },
+      winner: {
+        type: TrainerType,
+        description: 'Winning Trainer',
+        resolve: ({ winning_trainer }, args, { resolvers: { getTrainerById } }) =>
+        getTrainerById(winning_trainer),
+      },
+      loser: {
+        type: TrainerType,
+        description: 'Losing Trainer',
+        resolve: ({ losing_trainer }, args, { resolvers: { getTrainerById } }) =>
+        getTrainerById(losing_trainer),
+      },
     };
   },
 });
@@ -75,12 +87,10 @@ const RootQueryType = new GraphQLObjectType({
       battles: {
         type: new GraphQLList(BattleType),
         args: {
-          battleground: { type: GraphQLString },
-          winning_trainer: { type: GraphQLInt },
           losing_trainer: { type: GraphQLInt },
         },
-        resolve: (obj, args, { resolvers: { getBattles } }) =>
-        getBattles(args),
+        resolve: (obj, { losing_trainer }, { resolvers: { getBattles } }) =>
+        getBattles(losing_trainer),
       },
     };
   },
