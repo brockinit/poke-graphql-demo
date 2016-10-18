@@ -1,4 +1,4 @@
-![Alt text](/graphqlreact.png?raw=true)
+![Alt text](/pokemon_react.jpg?raw=true)
 
 ## Pokemon GraphQL Demo
 
