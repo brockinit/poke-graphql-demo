@@ -16,7 +16,7 @@ class App extends Component {
         <div className="App-header">
           <AppBar title="Gotta query 'em all" />
         </div>
-        <Trainers />
+        <Trainers className="cards" />
       </div>
     );
   }

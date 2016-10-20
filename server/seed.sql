@@ -35,7 +35,8 @@ VALUES
 ('Spencer','Toyama'),
 ('Jesse','Copeland'),
 ('Kent','Salcedo'),
-('Manny','Pilande');
+('Manny','Pilande'),
+('Caity', 'Kondo')
 
 INSERT INTO "pokemon" ("trainer_id","poke_name","poke_type","hp", "attack")
 VALUES
@@ -52,6 +53,7 @@ VALUES
 (7, 'Pikachu', 'Electric', 75, 50),
 (5, 'Ekans', 'Poison', 25, 40),
 (null, 'Venasaur', 'Grass', 100, 70),
+(11, 'Gengar', 'Ghost', 95, 70),
 (1, 'Caterpie', 'Bug', 10, 10);
 
 
@@ -61,6 +63,7 @@ VALUES
 ('Koko Head', 10, 1),
 ('Pewter City', 6, 3),
 ('Vermilion City', 8, 4),
+('Da Kine Gym', 11, 1),
 ('Back Alley', 7, 5);
 
 
