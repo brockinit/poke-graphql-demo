@@ -1,5 +1,5 @@
-import trainers from './trainers';
+import Trainers from './trainers';
 
 export {
-  trainers,
+  Trainers,
 };

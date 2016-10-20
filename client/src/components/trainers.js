@@ -6,12 +6,12 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 class TrainersList extends Component {
   render() {
     const { trainers } = this.props;
-    if (trainers.length === 0) return null;
-    const listWithData = trainers.map((trainer) => {
+    if (!trainers) return null;
+    const listWithData = trainers.map((trainer, i) => {
       if (i === 0 || i % 3 === 0) {
         return (
-          <div className="row">
-            <div className="four columns card">
+          <div className="row" key={i}>
+            <div className="four columns card" key={i}>
               <Card>
                 <CardHeader title={trainer.id} />
                 <CardText>
@@ -23,7 +23,7 @@ class TrainersList extends Component {
         );      
       }
       return (
-        <div className="four columns card">
+        <div className="four columns card" key={i}>
           <Card>
             <CardHeader title={trainer.id} />
             <CardText>
@@ -32,8 +32,8 @@ class TrainersList extends Component {
           </Card>
         </div>
       );
-    })
-    return listWithData;
+    });
+    return <div className="container">{listWithData}</div>;
   }
 }
 

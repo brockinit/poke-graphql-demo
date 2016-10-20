@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import './App.css';
+import { Trainers } from './components';
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class App extends Component {
         <div className="App-header">
           <AppBar title="Gotta query 'em all" />
         </div>
-        
+        <Trainers />
       </div>
     );
   }
