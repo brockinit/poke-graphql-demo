@@ -27,63 +27,60 @@ class TrainersList extends Component {
   render() {
     const { trainers } = this.props;
     if (!trainers) return null;
-    console.log(trainers);
-    const listWithData = trainers.map(({ first_name, last_name, id }, i) => {
-      if (i === 0 || i % 3 === 0) {
-        return (
-          <div className="row" key={i}>
-            <div className="four columns card" key={i}>
-              <Card 
-                expanded={this.state.expanded[id]}
-                onExpandChange={() => this.handleToggle(id)}
-              >
-                <CardHeader 
-                  title={`${first_name} ${last_name}`}
-                  avatar={`./images/${first_name}.png`} 
-                />
-                <CardText>
-                  <Toggle
-                    toggled={this.state.expanded[id]}
-                    name={id}
-                    onToggle={this.handleToggle}
-                    labelPosition="right"
-                    label="Show Pokemon & Battles"
-                  />
-                </CardText>
-                <CardText expandable={true}>
-                  Pokemon Go Here
-                </CardText>
-              </Card>
-            </div>
-          </div>
-        );      
-      }
-      return (
-        <div className="four columns card" key={i}>
-          <Card 
-            expanded={this.state.expanded[id]}
-            onExpandChange={() => this.handleToggle(id)}
-          >
-            <CardHeader 
-              title={`${first_name} ${last_name}`} 
-              avatar={`./images/${first_name}.png`} 
+    const listWithData = trainers.map(({ first_name, last_name, id, pokemon }, i) =>
+      <div className="four columns card" key={i}>
+        <Card 
+          expanded={this.state.expanded[id]}
+          name={id}
+          onExpandChange={this.handleToggle}
+        >
+          <CardHeader 
+            title={`${first_name} ${last_name}`}
+            avatar={`./images/${first_name}.png`} 
+          />
+          <CardText>
+            <Toggle
+              toggled={this.state.expanded[id]}
+              name={id}
+              onToggle={this.handleToggle}
+              labelPosition="right"
+              label="Show Pokemon & Battles"
             />
-            <CardText>
-              <Toggle
-                toggled={this.state.expanded[id]}
-                name={id}
-                onToggle={this.handleToggle}
-                labelPosition="right"
-                label="Show Pokemon & Battles"
-              />
+          </CardText>
+          {pokemon.map(({ poke_name, poke_type, hp, attack }, i) =>
+            <CardText expandable={true} key={`${poke_name} ${i}`}>
+              <div className="row">
+                <div className="six columns">
+                  <h6>Name</h6>
+                  <code>{poke_name}</code>
+                </div>
+                <div className="six columns">
+                  <h6>Type</h6>
+                  <code>{poke_type}</code>
+                </div>
+              </div>
+              <div className="row">
+                <div className="six columns">
+                  <h6>HP</h6>
+                  <code>{hp}</code>
+                </div>
+                <div className="six columns">
+                  <h6>Attack</h6>
+                  <code>{attack}</code>
+                </div>
+              </div>
             </CardText>
-            <CardText expandable={true}>
-              Pokemon Go Here
-            </CardText>
-          </Card>
-        </div>
-      );
-    });
+          )}
+        </Card>
+      </div>
+    )
+    .reduce((r, element, i) => {
+      i % 3 === 0 && r.push([]);
+      r[r.length - 1].push(element);
+      return r;
+    }, [])
+    .map((content, i) => <div className="row">{content}</div>);
+
     return <div className="cards">{listWithData}</div>;
   }
 }
