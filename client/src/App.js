@@ -4,12 +4,6 @@ import './App.css';
 import { Trainers } from './components';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      displayed: 'trainers'
-    };
-  }
   render() {
     return (
       <div className="container">

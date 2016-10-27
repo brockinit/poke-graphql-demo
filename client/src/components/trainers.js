@@ -10,14 +10,16 @@ class TrainersList extends Component {
     this.state = {
       expanded: {},
     };
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
-  handleToggle(id) {
-    const toggled = this.state.expanded[id] ? false : true;
+  handleToggle(event) {
+    const { target: { name } } = event;
+    const toggled = this.state.expanded[name] ? false : true;
     this.setState({ 
       expanded: { 
         ...this.state.expanded,
-        [id]: toggled 
+        [name]: toggled 
       } 
     });
   }
@@ -25,6 +27,7 @@ class TrainersList extends Component {
   render() {
     const { trainers } = this.props;
     if (!trainers) return null;
+    console.log(trainers);
     const listWithData = trainers.map(({ first_name, last_name, id }, i) => {
       if (i === 0 || i % 3 === 0) {
         return (
@@ -41,7 +44,8 @@ class TrainersList extends Component {
                 <CardText>
                   <Toggle
                     toggled={this.state.expanded[id]}
-                    onToggle={() => this.handleToggle(id)}
+                    name={id}
+                    onToggle={this.handleToggle}
                     labelPosition="right"
                     label="Show Pokemon & Battles"
                   />
@@ -67,7 +71,8 @@ class TrainersList extends Component {
             <CardText>
               <Toggle
                 toggled={this.state.expanded[id]}
-                onToggle={() => this.handleToggle(id)}
+                name={id}
+                onToggle={this.handleToggle}
                 labelPosition="right"
                 label="Show Pokemon & Battles"
               />
